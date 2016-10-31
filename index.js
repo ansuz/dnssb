@@ -1,7 +1,7 @@
 var Dnsd = require("dnsd");
 var Client = require("ssb-client");
 var Pull = require("pull-stream");
-var Paramap = require("pull-paramap");
+var Ansuz = require("ansuz");
 
 var Config;
 try {
@@ -13,7 +13,9 @@ try {
 
 var log = {
     req: function (req) {
+        if (!Config.verbose) { return; }
         var q = req.question[0];
+        console.log();
         console.log({
             name: q.name,
             type: q.type,
@@ -23,13 +25,13 @@ var log = {
 };
 
 var answer = function (sbot, req, res) {
-    console.log();
     log.req(req);
 
     var q = req.question;
 
+    // TODO validate queries more carefully
     if (!q.length) {
-        console.log("invalid question");
+        console.error("invalid question");
         res.end();
     }
 
@@ -39,16 +41,14 @@ var answer = function (sbot, req, res) {
     Pull(sbot.messagesByType({
         type: 'ssb-dns',
     }),
-    Paramap(function getAvatar(msg, cb) {
-        cb(null, msg);
+    Pull.map(function (msg) {
+        return Ansuz.find(msg, ['value', 'content', 'record']);
     }),
-    Pull.drain(function printMessage(msg) {
-        var record = msg.value.content.record;
-
+    Pull.filter(function (record) { return record; }),
+    Pull.find(function printMessage(record) {
         if (typeof(record) !== 'object') { return; }
-
         if (name && type &&
-            record.name === name &&
+            record.name === name.toLowerCase() &&
             record.type === type &&
             record.value) {
             console.log("%s (%s) => %s", name, record.type, record.value);
@@ -59,10 +59,12 @@ var answer = function (sbot, req, res) {
                 name: record.name,
                 type: record.type,
                 data: record.value,
-                ttl: 500,
+                ttl: 500, // short ttl
             });
-            res.end()
+            return true;
         }
+    }, function () {
+        res.end();
     }));
 };
 

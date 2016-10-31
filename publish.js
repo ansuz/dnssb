@@ -36,7 +36,7 @@ var isValidRecord = function (record) {
 
 var makeRecord = function (name, type, value, _class) {
     return {
-        name: name,
+        name: name.toLowerCase(), // domain names must be lowercase
         type: type,
         value: value,
         class: _class || 'IN',
