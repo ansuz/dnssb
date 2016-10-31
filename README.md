@@ -24,6 +24,12 @@ If you'd prefer, you can `cp config.js.dist config.js` and edit `config.js` to s
 
 ## Publish a record
 
+**NOTE**:So far the publishing script is hardcoded to reject records which don't end in `.ssb`.
+
+This was [cSmith](https://github.com/cschmittiey)'s idea.
+
+In the future this might be genralized to squat even more TLDs, or to simply be unopinionated about them.
+
 ```
 ./publish.js {domain name} {record type} {value} [optionally add a dns class]
 ```
