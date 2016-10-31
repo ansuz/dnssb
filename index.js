@@ -1,88 +1,68 @@
-var Dnsd = require("dnsd");
-var Client = require("ssb-client");
-var Pull = require("pull-stream");
-var Ansuz = require("ansuz");
+#!/bin/sh
+':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+// http://unix.stackexchange.com/questions/65235/universal-node-js-shebang
 
-var Config;
-try {
-    Config = require("./config.js");
-} catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-        console.error("\nCouldn't find './config.js'. Using defaults");
-        Config = require("./config.dist.js");
-    } else {
-        throw err;
-    }
+var Lib = require("./lib/");
+
+(function () {
+if (require.main !== module) { return module.exports = Lib; }
+
+var publishHelp = "\tssb-dns publish name type value (class)";
+var serverHelp = "\tssb-dns server port host";
+
+var CLI_Help = function () {
+    [
+        "try one of:",
+        serverHelp,
+        publishHelp,
+    ].forEach(function (m) {
+        console.log(m);
+    });
+};
+
+var argv = process.argv.slice(2);
+
+switch (argv[0]) {
+    case undefined:
+        CLI_Help();
+        break;
+    case 'server':
+    (function () {
+        var port = argv[1] || 53053;
+        var host = argv[2] || '127.0.0.1';
+
+        Lib.server.listen( port, host, function () {
+            console.log("server listening on %s:%s", host, port);
+        });
+    }());
+        break;
+    case 'publish':
+    (function () {
+        console.log(argv.length);
+        if (argv.length < 4) {
+            console.log("Try:");
+            console.error(publishHelp);
+            return;
+        }
+
+        var name = argv[1];
+        var type = argv[2];
+        var value = argv[3];
+        var _class = argv[4];
+
+        Lib.publish.record(name, type, value, _class, function (err, msg) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+            console.log(msg);
+            process.exit(0);
+        });
+    }());
+        break;
+    default:
+        CLI_Help();
+        break;
 }
 
-var log = {
-    req: function (req) {
-        if (!Config.verbose) { return; }
-        var q = req.question[0];
-        console.log();
-        console.log({
-            name: q.name,
-            type: q.type,
-            class: q.class,
-        });
-    },
-};
-
-var answer = function (sbot, req, res) {
-    log.req(req);
-
-    var q = req.question;
-
-    // TODO validate queries more carefully
-    if (!q.length) {
-        console.error("invalid question");
-        res.end();
-    }
-
-    var name = q[0].name;
-    var type = q[0].type;
-
-    Pull(sbot.messagesByType({
-        type: 'ssb-dns',
-    }),
-    Pull.map(function (msg) {
-        return Ansuz.find(msg, ['value', 'content', 'record']);
-    }),
-    Pull.filter(function (record) { return record; }),
-    Pull.find(function printMessage(record) {
-        if (typeof(record) !== 'object') { return; }
-        if (name && type &&
-            record.name === name.toLowerCase() &&
-            record.type === type &&
-            record.value) {
-            console.log("%s (%s) => %s", name, record.type, record.value);
-
-            // returns the first matching record found
-            // TODO support multiple returned values
-            res.answer.push({
-                name: record.name,
-                type: record.type,
-                data: record.value,
-                ttl: 500, // short ttl
-            });
-            return true;
-        }
-    }, function () {
-        res.end();
-    }));
-};
-
-var createServer = function (sbot, port, host, cb) {
-    Dnsd.createServer(function(req, res) {
-        answer(sbot, req, res);
-    }).listen(port, host, cb);
-};
-
-Client(function (err, sbot) {
-    if (err) {
-        console.error(err);
-        return void process.exit(1);
-    }
-    createServer(sbot, Config.port, Config.host, Config.ready);
-});
-
+}());
