@@ -10,10 +10,18 @@ So let's mash them together.
 
 ## Installation
 
+Via npm:
+
+```
+npm i -g ssb-dns;
+```
+
+Or via git:
+
 ```
 git clone https://github.com/ansuz/ssb-dns;
 cd ssb-dns;
-npm i;
+npm i -g;
 ```
 
 ## Configuraiton
@@ -31,10 +39,18 @@ This was [cSmith](https://github.com/cschmittiey)'s idea.
 In the future this might be genralized to squat even more TLDs, or to simply be unopinionated about them.
 
 ```
-./publish.js {domain name} {record type} {value} [optionally add a dns class]
+ssb-dns publish {domain name} {record type} {value} [optionally add a dns class]
 ```
 
 ## Fetch a record
+
+First launch the server in one terminal:
+
+```
+ssb-dns server {port: 53053} {host: 127.0.0.1}
+```
+
+Then query it for a record:
 
 ```
 dig @localhost -p 53053 {name} {type}
