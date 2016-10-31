@@ -7,8 +7,12 @@ var Config;
 try {
     Config = require("./config.js");
 } catch (err) {
-    console.error("\nCouldn't find './config.js'. Using defaults");
-    Config = require("./config.dist.js");
+    if (err.code === 'MODULE_NOT_FOUND') {
+        console.error("\nCouldn't find './config.js'. Using defaults");
+        Config = require("./config.dist.js");
+    } else {
+        throw err;
+    }
 }
 
 var log = {
