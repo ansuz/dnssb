@@ -1,0 +1,20 @@
+{
+  "name": "ssb-dns",
+  "version": "1.0.0",
+  "description": "resolve dns via ssb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dnsd": "^0.9.6",
+    "ssb-client": "^4.0.2"
+  },
+  "keywords": [
+    "dns",
+    "ssb",
+    "scuttlebot"
+  ],
+  "author": "ansuz",
+  "license": "AGPL-3.0"
+}
