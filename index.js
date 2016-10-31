@@ -3,26 +3,12 @@ var Client = require("ssb-client");
 var Pull = require("pull-stream");
 var Paramap = require("pull-paramap");
 
-
-
-
-
-
-
-
-
 var Config;
 try {
     Config = require("./config.js");
 } catch (err) {
     console.error("\nCouldn't find './config.js'. Using defaults");
-    Config = {
-        port: 53053,
-        host: '127.0.0.1',
-        ready: function () {
-            console.log('Server running at %s:%s', Config.host, Config.port);
-        },
-    };
+    Config = require("./config.dist.js");
 }
 
 var log = {
@@ -57,20 +43,22 @@ var answer = function (sbot, req, res) {
         cb(null, msg);
     }),
     Pull.drain(function printMessage(msg) {
-        var text = msg.value.content.text;
+        var record = msg.value.content.record;
 
-        var result;
-        try {
-            result = JSON.parse(text);
-        } catch (err) {
-            throw new Error("Invalid record!");
-        }
-        if (name && type && result.name === name && result.type === type && result.value) {
-            console.log("%s (%s) => %s", name, result.type, result.value);
+        if (typeof(record) !== 'object') { return; }
+
+        if (name && type &&
+            record.name === name &&
+            record.type === type &&
+            record.value) {
+            console.log("%s (%s) => %s", name, record.type, record.value);
+
+            // returns the first matching record found
+            // TODO support multiple returned values
             res.answer.push({
-                name: result.name,
-                type: result.type,
-                data: result.value,
+                name: record.name,
+                type: record.type,
+                data: record.value,
                 ttl: 500,
             });
             res.end()
@@ -89,8 +77,6 @@ Client(function (err, sbot) {
         console.error(err);
         return void process.exit(1);
     }
-    var port = 53053;
-    var host = '127.0.0.1';
     createServer(sbot, Config.port, Config.host, Config.ready);
 });
 
