@@ -3,6 +3,28 @@ var Client = require("ssb-client");
 var Pull = require("pull-stream");
 var Paramap = require("pull-paramap");
 
+
+
+
+
+
+
+
+
+var Config;
+try {
+    Config = require("./config.js");
+} catch (err) {
+    console.error("\nCouldn't find './config.js'. Using defaults");
+    Config = {
+        port: 53053,
+        host: '127.0.0.1',
+        ready: function () {
+            console.log('Server running at %s:%s', Config.host, Config.port);
+        },
+    };
+}
+
 var log = {
     req: function (req) {
         var q = req.question[0];
@@ -69,8 +91,6 @@ Client(function (err, sbot) {
     }
     var port = 53053;
     var host = '127.0.0.1';
-    createServer(sbot, port, host, function () {
-        console.log('Server running at %s:%s', host, port);
-    });
+    createServer(sbot, Config.port, Config.host, Config.ready);
 });
 
