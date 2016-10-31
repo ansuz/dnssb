@@ -28,18 +28,18 @@ var endsInSSB = function (s) {
 };
 
 var isValidRecord = function (record) {
-    return endsInSSB(record.name) &&
-        record.value &&
-        isValidType(record.type) &&
-        isValidClass(record.class);
+    return endsInSSB(record.name) && // it ends in .ssb
+        record.value && // there is a value // TODO validate that it is correct for the type
+        isValidType(record.type) && // it is a valid type
+        isValidClass(record.class); // there is a class // TODO make sure it's valid
 };
 
 var makeRecord = function (name, type, value, _class) {
     return {
         name: name,
         type: type,
+        value: value,
         class: _class || 'IN',
-        value: value
     };
 };
 
@@ -47,8 +47,8 @@ var serialize = function (record) {
     return JSON.stringify(record);
 };
 
-var publish = function (name, type, _class) {
-    var record = makeRecord(name, type, _class);
+var publish = function (name, type, value, _class) {
+    var record = makeRecord(name, type, value, _class);
 
     if (!isValidRecord(record)) {
         console.error("invalid input");
@@ -62,8 +62,7 @@ var publish = function (name, type, _class) {
         }
 
         // publish a message
-        sbot.publish({ type: 'ssb-dns', text: serialize(record) }, function (err, msg) {
-
+        sbot.publish({ type: 'ssb-dns', record: record }, function (err, msg) {
             console.log(msg);
 
             console.log(JSON.stringify(record, null, 4));
@@ -76,4 +75,5 @@ var publish = function (name, type, _class) {
     });
 };
 
-publish(args[0], args[1], args[2]);
+// name type value class
+publish(args[0], args[1], args[2], args[3]);
