@@ -16,6 +16,12 @@ cd ssb-dns;
 npm i;
 ```
 
+## Configuraiton
+
+By default, the server will listen on `127.0.0.1:53053`.
+
+If you'd prefer, you can `cp config.js.dist config.js` and edit `config.js` to suit your needs.
+
 ## Publish a record
 
 ```
@@ -30,9 +36,9 @@ dig @localhost -p 53053 {name} {type}
 
 ## FAQ
 
-> Can I use this without running [scuttlebot](http://github.com/ssbc/scuttlebot)
+> Can I use this without running [scuttlebot](http://github.com/ssbc/scuttlebot)?
 
-No, but you could get a friend to host it if you _really_ trust them.
+You could get a friend to host it if you _really_ trust them.
 
 > Is it Enterprise-Ready?
 
@@ -55,4 +61,13 @@ Not yet.
 > How optimized is this?
 
 Not even a little bit, and it doesn't exactly fail gracefully either.
+
+## TODO
+
+* merge server and publish into one script
+  - `ssb-dns server`
+  - `ssb-dns publish`
+* support more cli options
+  - `--port=5353`
+  - `--host=::`
 
