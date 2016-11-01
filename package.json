@@ -1,6 +1,6 @@
 {
   "name": "ssb-dns",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "resolve dns via ssb",
   "main": "index.js",
   "bin": "index.js",
