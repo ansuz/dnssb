@@ -12,7 +12,7 @@
     "kvset": "1.0.0",
     "dnsd": "^0.9.6",
     "ssb-client": "^4.0.2",
-    "ssb-ref": "^2.6.3"
+    "ssb-ref": "^2.6.2"
   },
   "keywords": [
     "dns",
