@@ -47,6 +47,12 @@ existing records, omit the message ids.
 
 ## Display all records
 
+> I want to use this
+
+You'll only be able to resolve records that your node knows about.
+
+You can print a list of valid records with:
+
 ```
 dnssb dump
 ```
