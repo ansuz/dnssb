@@ -1,4 +1,4 @@
-# ssb-dns
+# dnssb
 
 It's fairly easy to [serve dns](https://github.com/iriscouch/dnsd) from a nodejs process.
 
@@ -19,14 +19,14 @@ npm i -g ssb-dns;
 Or via git:
 
 ```
-git clone https://github.com/ansuz/ssb-dns;
-cd ssb-dns;
+git clone https://github.com/ansuz/dnssb;
+cd dnssb;
 npm i -g;
 ```
 
 ## Usage
 
-`ssb-dns` assumes that you have a scuttlebot instance running.
+`dnssb` assumes that you have a scuttlebot instance running.
 You can find out more about scuttlebot [here](https://ssbc.github.io/scuttlebot/).
 
 ## Publish a record
@@ -38,7 +38,7 @@ This was [cSmith](https://github.com/cschmittiey)'s idea.
 In the future this might be genralized to squat even more TLDs, or to simply be unopinionated about them.
 
 ```
-ssb-dns publish [{prev record key}...] {domain name} {record type} {value} [optionally add a dns class]
+dnssb publish [{prev record key}...] {domain name} {record type} {value} [optionally add a dns class]
 ```
 
 To replace some existing ssb-dns records, pass their ssb message id(s) as
@@ -50,7 +50,7 @@ existing records, omit the message ids.
 First launch the server in one terminal:
 
 ```
-ssb-dns server {port: 53053} {host: 127.0.0.1}
+dnssb server {port: 53053} {host: 127.0.0.1}
 ```
 
 Then query it for a record:
