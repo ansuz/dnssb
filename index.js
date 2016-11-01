@@ -19,6 +19,7 @@ var CLI_Help = function () {
         "try one of:",
         serverHelp,
         publishHelp,
+        updateHelp,
         dumpHelp,
     ].forEach(function (m) {
         console.log(m);
