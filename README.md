@@ -45,6 +45,12 @@ To replace some existing ssb-dns records, pass their ssb message id(s) as
 the first arguments to the publish command. To append a record to the set of
 existing records, omit the message ids.
 
+To replace all existing records for a name+type+class, use `update`:
+
+```
+ssb-dns update {domain name} {record type} {value} [optionally add a dns class]
+```
+
 ## Fetch a record
 
 First launch the server in one terminal:
