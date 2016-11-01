@@ -1,9 +1,12 @@
 {
   "name": "ssb-dns",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "resolve dns via ssb",
   "main": "index.js",
-  "bin": "index.js",
+  "bin": {
+      "dnssb": "index.js",
+      "ssb-dns": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

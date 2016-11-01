@@ -61,7 +61,6 @@ switch (argv[0]) {
             branches.push(argv.splice(1));
         }
 
-        console.log(argv.length);
         if (argv.length < 4) {
             console.log("Try:");
             console.error(publishHelp);
