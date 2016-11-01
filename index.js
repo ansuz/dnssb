@@ -8,7 +8,7 @@ var Lib = require("./lib/");
 (function () {
 if (require.main !== module) { return module.exports = Lib; }
 
-var publishHelp = "\tssb-dns publish name type value (class)";
+var publishHelp = "\tssb-dns publish (previous record key...) name type value (class)";
 var serverHelp = "\tssb-dns server port host";
 var dumpHelp = "\tssb-dns dump";
 
