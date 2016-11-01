@@ -38,8 +38,12 @@ This was [cSmith](https://github.com/cschmittiey)'s idea.
 In the future this might be genralized to squat even more TLDs, or to simply be unopinionated about them.
 
 ```
-ssb-dns publish {domain name} {record type} {value} [optionally add a dns class]
+ssb-dns publish [{prev record key}...] {domain name} {record type} {value} [optionally add a dns class]
 ```
+
+To replace some existing ssb-dns records, pass their ssb message id(s) as
+the first arguments to the publish command. To append a record to the set of
+existing records, omit the message ids.
 
 ## Fetch a record
 

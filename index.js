@@ -2,6 +2,7 @@
 ':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 // http://unix.stackexchange.com/questions/65235/universal-node-js-shebang
 
+var SsbRef = require("ssb-ref");
 var Lib = require("./lib/");
 
 (function () {
@@ -32,7 +33,7 @@ switch (argv[0]) {
     case 'dump':
     (function () {
         var count = 0;
-        Lib.dump.records(function (msg, record) { // each
+        Lib.dump.records(function (record) { // each
             console.log(JSON.stringify(record, null, 2));
             count++;
         }, function (sbot) { // done
@@ -53,6 +54,11 @@ switch (argv[0]) {
         break;
     case 'publish':
     (function () {
+        var branches = [];
+        while (argv[1] && SsbRef.isMsgId(argv[1])) {
+            branches.push(argv.splice(1));
+        }
+
         console.log(argv.length);
         if (argv.length < 4) {
             console.log("Try:");
@@ -65,7 +71,7 @@ switch (argv[0]) {
         var value = argv[3];
         var _class = argv[4];
 
-        Lib.publish.record(name, type, value, _class, function (err, msg) {
+        Lib.publish.record(branches, name, type, value, _class, function (err, msg) {
             if (err) {
                 console.error(err);
                 process.exit(1);
