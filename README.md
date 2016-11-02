@@ -29,6 +29,16 @@ npm i -g;
 `dnssb` assumes that you have a scuttlebot instance running.
 You can find out more about scuttlebot [here](https://ssbc.github.io/scuttlebot/).
 
+Alternatively, you can run `dnssb server` as a scuttlebot plugin:
+
+```
+cd dnssb
+mkdir -p ~/.ssb/node_modules
+ln -rs . ~/.ssb/node_modules/dns
+sbot plugins.enable dns
+# restart sbot
+```
+
 ## Publish a record
 
 **NOTE**:So far the publishing script is hardcoded to reject records which don't end in `.ssb`.
