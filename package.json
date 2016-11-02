@@ -4,16 +4,17 @@
   "description": "resolve dns via ssb",
   "main": "index.js",
   "bin": {
-      "dnssb": "index.js",
-      "ssb-dns": "index.js"
+    "dnssb": "index.js",
+    "ssb-dns": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "ansuz": "0.0.14",
-    "kvset": "1.0.0",
     "dnsd": "^0.9.6",
+    "kvset": "1.0.0",
+    "pad-ipv6": "^1.0.2",
     "ssb-client": "^4.0.2",
     "ssb-ref": "^2.6.2"
   },
