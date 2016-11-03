@@ -82,7 +82,7 @@ switch (argv[0]) {
                 console.error(err);
                 process.exit(1);
             }
-            console.log(msg);
+            console.log(JSON.stringify(msg, null, 2));
             process.exit(0);
         });
     }());
