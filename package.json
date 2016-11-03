@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "ansuz": "0.0.14",
-    "dnsd": "^0.9.6",
+    "modern-dnsd": "^0.9.7",
     "kvset": "1.0.0",
     "pad-ipv6": "^1.0.2",
     "ssb-client": "^4.0.2",
