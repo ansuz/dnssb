@@ -48,9 +48,14 @@ switch (argv[0]) {
     (function () {
         var port = argv[1] || 53053;
         var host = argv[2] || '127.0.0.1';
+        var Client = require("ssb-client");
 
-        Lib.server.listen( port, host, function () {
-            console.log("server listening on %s:%s", host, port);
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            Lib.server.listen(sbot, port, host, function () {
+                console.log("server listening on %s:%s", host, port);
+            });
         });
     }());
         break;
