@@ -8,11 +8,11 @@ var Lib = require("./lib/");
 (function () {
 if (require.main !== module) { return module.exports = Lib; }
 
-var publishHelp = "\tssb-dns publish (previous record key...) name type value (class)";
-var updateHelp = "\tssb-dns update name type value (class)";
-var serverHelp = "\tssb-dns server port host";
-var dumpHelp = "\tssb-dns dump";
-
+var publishHelp = "\tdnssb publish (previous record key...) name type value (class)";
+var updateHelp = "\tdnssb update name type value (class)";
+var branchHelp = "\tdnssb branch name type (class)";
+var serverHelp = "\tdnssb server port host";
+var dumpHelp = "\tdnssb dump";
 
 var CLI_Help = function () {
     [
@@ -20,6 +20,7 @@ var CLI_Help = function () {
         serverHelp,
         publishHelp,
         updateHelp,
+        branchHelp,
         dumpHelp,
     ].forEach(function (m) {
         console.log(m);
@@ -108,6 +109,33 @@ switch (argv[0]) {
                 process.exit(0);
             });
         })
+    }());
+        break;
+
+
+    case 'branch':
+    (function () {
+        if (argv.length < 3) {
+            console.log("Try:");
+            console.error(branchHelp);
+            return;
+        }
+
+        var name = argv[1];
+        var type = argv[2];
+        var _class = argv[3];
+
+        Lib.query.branches(name, type, _class, function (err, branches) {
+            if (!branches.length) {
+                console.error("No branches found");
+                process.exit(1);
+            }
+            branches.forEach(function (branch) {
+                console.log(branch);
+            });
+
+            process.exit(0);
+        });
     }());
         break;
     default:
