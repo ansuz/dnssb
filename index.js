@@ -8,8 +8,8 @@ var Lib = require("./lib/");
 (function () {
 if (require.main !== module) { return module.exports = Lib; }
 
-var publishHelp = "\tssb-dns publish (previous record key...) name type value (class)";
-var updateHelp = "\tssb-dns update name type value (class)";
+var publishHelp = "\tssb-dns publish [previous record key...] name [ttl] [class] type value";
+var updateHelp = "\tssb-dns update name [ttl] [class] type value";
 var serverHelp = "\tssb-dns server port host";
 var dumpHelp = "\tssb-dns dump";
 
@@ -72,12 +72,9 @@ switch (argv[0]) {
             return;
         }
 
-        var name = argv[1];
-        var type = argv[2];
-        var value = argv[3];
-        var _class = argv[4];
+        var record = Lib.parse.argsToRecord(argv.slice(1));
 
-        Lib.publish.record(branches, name, type, value, _class, function (err, msg) {
+        Lib.publish.record(branches, record, function (err, msg) {
             if (err) {
                 console.error(err);
                 process.exit(1);
@@ -95,14 +92,11 @@ switch (argv[0]) {
             return;
         }
 
-        var name = argv[1];
-        var type = argv[2];
-        var value = argv[3];
-        var _class = argv[4];
+        var record = Lib.parse.argsToRecord(argv.slice(1));
 
-        Lib.query.branches(name, type, _class, function (err, branches) {
+        Lib.query.branches(record.name, record.type, record.class, function (err, branches) {
             if (err) throw err;
-            Lib.publish.record(branches, name, type, value, _class, function (err, msg) {
+            Lib.publish.record(branches, record, function (err, msg) {
                 if (err) throw err;
                 console.log(msg);
                 process.exit(0);
