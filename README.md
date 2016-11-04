@@ -48,7 +48,7 @@ This was [cSmith](https://github.com/cschmittiey)'s idea.
 In the future this might be genralized to squat even more TLDs, or to simply be unopinionated about them.
 
 ```
-dnssb publish [{prev record key}...] {domain name} {record type} {value} [optionally add a dns class]
+dnssb publish [{prev record key}...] {domain name} [{ttl}] [{dns class}] {record type} {value}
 ```
 
 To replace some existing dnssb records, pass their ssb message id(s) as
@@ -58,7 +58,7 @@ existing records, omit the message ids.
 To replace all existing records for a name+type+class, use `update`:
 
 ```
-ssb-dns update {domain name} {record type} {value} [optionally add a dns class]
+dnssb update {domain name} [{ttl}] [{dns class}] {record type} {value}
 ```
 
 ## Display all records
