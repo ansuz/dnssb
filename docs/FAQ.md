@@ -22,9 +22,14 @@ Naming things is a social problem, and the best way to resolve conflicts is prob
 
 Additionally, in the future there will be better support for reporting and blocking abusive behaviour.
 
+> How does it handle multiple records for a single domain?
+
+Records are concatenated together, even if they are authored by different users.
+
 > Does it resolve conflicts if they occur?
 
-Not yet.
+Since multiple publish actions are concatenated together, the only way to conflict is for two users to `update` the same message.
+In such a case, the previous set of records will be replaced with the set of all records which attempted to replace it.
 
 > What is it good for?
 
