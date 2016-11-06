@@ -51,6 +51,16 @@ In the future this might be genralized to squat even more TLDs, or to simply be 
 dnssb publish [{prev record key}...] {domain name} [{ttl}] [{dns class}] {record type} {value}
 ```
 
+For example:
+
+```Bash
+# publish an ipv4 record for localhost.ssb
+dnssb publish localhost.ssb 3600 IN A 127.0.0.1
+
+# publish an ipv6 record for localhost.ssb
+dnssb publish localhost.ssb 3600 IN AAAA ::1
+```
+
 To replace some existing dnssb records, pass their ssb message id(s) as
 the first arguments to the publish command. To append a record to the set of
 existing records, omit the message ids.
@@ -85,6 +95,18 @@ Then query it for a record:
 
 ```
 dig @localhost -p 53053 {name} {type}
+```
+
+The records which are available to you are determined by your peering, but
+assuming you have tried the `localhost.ssb` example commands listed above,
+you should be able to run the following:
+
+```Bash
+# query for ipv4 localhost.ssb
+dig @localhost -p 53053 localhost.ssb A
+
+# query for ipv6 localhost.ssb
+dig @localhost -p 53053 localhost.ssb AAAA
 ```
 
 ## Questions
