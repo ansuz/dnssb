@@ -1,6 +1,6 @@
 # dnssb
 
-It's fairly easy to [serve dns](https://github.com/iriscouch/dnsd) from a nodejs process.
+It's fairly easy to [serve dns](https://github.com/ansuz/modern-dnsd) from a nodejs process.
 
 [scuttlebot](http://ssbc.github.io/scuttlebot/) makes it easy to work with a peer-to-peer log store.
 
