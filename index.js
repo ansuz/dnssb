@@ -94,15 +94,20 @@ switch (argv[0]) {
         }
 
         var record = Lib.parse.argsToRecord(argv.slice(1));
+        var Client = require("ssb-client");
 
-        Lib.query.branches(record.name, record.type, record.class, function (err, branches) {
+        Client(function (err, sbot) {
             if (err) throw err;
-            Lib.publish.record(branches, record, function (err, msg) {
+
+            Lib.query.branches(sbot, record.name, record.type, record.class, function (err, branches) {
                 if (err) throw err;
-                console.log(msg);
-                process.exit(0);
+                Lib.publish.record(branches, record, function (err, msg) {
+                    if (err) throw err;
+                    console.log(msg);
+                    process.exit(0);
+                });
             });
-        })
+        });
     }());
         break;
 
@@ -123,7 +128,9 @@ switch (argv[0]) {
         Client(function (err, sbot) {
             if (err) throw err;
 
-            Lib.query.branches(name, type, _class, function (err, branches) {
+            Lib.query.branches(sbot, name, type, _class, function (err, branches) {
+                if (err) throw err;
+
                 if (!branches.length) {
                     console.error("No branches found");
                     process.exit(1);
@@ -135,7 +142,6 @@ switch (argv[0]) {
                 process.exit(0);
             });
         });
-      });
     }());
         break;
     default:
