@@ -118,18 +118,24 @@ switch (argv[0]) {
         var name = argv[1];
         var type = argv[2];
         var _class = argv[3];
+        var Client = require("ssb-client");
 
-        Lib.query.branches(name, type, _class, function (err, branches) {
-            if (!branches.length) {
-                console.error("No branches found");
-                process.exit(1);
-            }
-            branches.forEach(function (branch) {
-                console.log(branch);
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            Lib.query.branches(name, type, _class, function (err, branches) {
+                if (!branches.length) {
+                    console.error("No branches found");
+                    process.exit(1);
+                }
+                branches.forEach(function (branch) {
+                    console.log(branch);
+                });
+
+                process.exit(0);
             });
-
-            process.exit(0);
         });
+      });
     }());
         break;
     default:
