@@ -42,7 +42,7 @@ Those zones are in turn divided into subzones, which can be further subdivided.
 _Ownership_ of any zone can be revoked by the parent owner, all the way back up to the global root.
 
 This form of governance is effectively a kind of [feudalism](https://en.wikipedia.org/wiki/Feudalism), which is not to say that it is incorrect.
-Unique names are considered a resource, and resources must be distributed resources somehow.
+Unique names are considered a resource, and resources must be distributed somehow.
 
 **ICANN** typically distributes resources to _those who pay for them_.
 
@@ -103,7 +103,7 @@ As such, Namecoin is still more resilient against censorship than ICANN, but it 
 
 dnssb is a _Domain Name System_ built on top of [_Secure Scuttlebutt_](https://scuttlebot.io/) (aka SSB), a protocol by which users append messages to a personal log, and distribute their messages via a gossiping mechanism.
 
-Messages integrity is guaranteed by cryptography, and as such the original author need not be the one to distribute their content.
+Messages' integrity is guaranteed by cryptography, and as such the original author need not be the one to distribute their content.
 As such, it can be used as a distributed database which does not require constant connectivity to function, and which is [eventually consistent](https://en.wikipedia.org/wiki/Eventual_consistency).
 
 Asymmetric peer connections are established manually by _following_ a feed, which can be _unfollowed_ at any point in time in the future.
@@ -120,7 +120,7 @@ It can be bound to a local address, or to a public address which others can use 
 
 As Namecoin has shown, users must be motivated to adopt a particular DNS solution to be their arbiter of _the truth_.
 
-The premise of dnssb is that it can bootstrap its adoption from _existing ssb networks_ and take advantage of socially motivated [Network Effects](https://en.wikipedia.org/wiki/Network_effect).
+The premise of dnssb is that it can bootstrap its adoption from _existing ssb networks_ and take advantage of socially motivated [network effects](https://en.wikipedia.org/wiki/Network_effect).
 
 A variety of applications have already been built on ssb, and those who use those applications have built an implicit [_web of trust_](https://en.wikipedia.org/wiki/Web_of_trust).
 The implications of the web of trust are not absolute, rather, their meaning depends on their context, which is fluid.
@@ -131,17 +131,17 @@ If a user prefers not to unfollow another, but finds their behaviour inappropria
 Since anyone in your social network can publish records that your DNS server will resolve, your DNS server is only as secure as your social network.
 To elaborate, unlike the solutions provided above, dnssb does not attempt to dictate global truth, instead, it attempts to provide mechanisms by which social groups can converge on a locally relevant truth.
 
-dnssb assumes a position of [Agonism](https://en.wikipedia.org/wiki/Agonism), which views conflict as unavoidable.
+dnssb assumes a position of [agonism](https://en.wikipedia.org/wiki/Agonism), which views conflict as unavoidable.
 Rather than relying on a centralized political entity, or a distributed, cryptographically authoritative datastore to act as arbiter of the truth, dnssb relegates the responsibility to localized social groups.
 It does so based on the arguments given above which demonstrate that _all systems are subject to social forces anyway_.
 
 The challenge, then lies in situations in which two local communities which disagree determine how to interact.
 Those at the borders of these disparate but overlapping networks must negotiate if they are to converge on a single truth.
-If ICANN represents _feudalism_, and Namecoin embodies _Anarcho-Capitalism_, then dnssb can be interpreted as a type of [_Federalism_](https://en.wikipedia.org/wiki/Federalism).
+If ICANN represents _feudalism_, and Namecoin embodies _Anarcho-Capitalism_, then dnssb can be interpreted as a type of [_federalism_](https://en.wikipedia.org/wiki/Federalism).
 
 ### Censorship and dnssb
 
-Like those on Namecoin, DNS records distributed via Secure Scuttlebutt are guaranteed by Cryptography.
+Like those on Namecoin, DNS records distributed via Secure Scuttlebutt are guaranteed by cryptography.
 Unlike those on Namecoin, they are not globally authoritative, and so if anyone wants to state that _a particular assertion is not the truth_, we are inclined to let them.
 Their assertion will not stop others from distributing those records, and they will see that local disagreement has very little effect on the system as a whole.
 
