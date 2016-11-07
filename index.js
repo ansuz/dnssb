@@ -13,6 +13,7 @@ var updateHelp = "\tdnssb update name [ttl] [class] type value";
 var branchHelp = "\tdnssb branch name type (class)";
 var serverHelp = "\tdnssb server port host";
 var dumpHelp = "\tdnssb dump";
+var showHelp = "\tdnssb show [domain]";
 
 var CLI_Help = function () {
     [
@@ -22,6 +23,7 @@ var CLI_Help = function () {
         updateHelp,
         branchHelp,
         dumpHelp,
+        showHelp,
     ].forEach(function (m) {
         console.log(m);
     });
@@ -41,6 +43,17 @@ switch (argv[0]) {
             count++;
         }, function (sbot) { // done
             console.log("Found a total of %s valid ssb-dns records", count);
+            sbot.close();
+        });
+    }());
+        break;
+    case 'show':
+    (function () {
+        var name = argv[1] || '';
+
+        Lib.dump.records({name: name}, function (record) {
+            console.log(Lib.format.recordToLine(record));
+        }, function (sbot) { // done
             sbot.close();
         });
     }());
