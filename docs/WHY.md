@@ -166,4 +166,9 @@ You would like to host a DNS server, but do not want any single entity to be res
 By subscribing to a number of feeds, a single server can aggregate a variety of trusted peers' decisions into a single point of authority.
 This registry can be easily replicated by any peer subscribing to that feed, but can be overridden using other records if desired.
 
+### Anonymous surfing
 
+Having all your DNS records locally means that no-one can see your DNS
+request to infer browsing habits. Even when using dnssec the owner of
+the DNS server can still see the records you are requesting. Metadata
+is often as important or more important than the actual content.
