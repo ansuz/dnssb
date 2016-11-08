@@ -51,8 +51,8 @@ switch (argv[0]) {
     (function () {
         var name = argv[1] || '';
 
-        Lib.dump.records({name: name}, function (record) {
-            console.log(Lib.format.recordToLine(record));
+        Lib.dump.formattedRecords({name: name}, function (line) { // each
+            console.log(line);
         }, function (sbot) { // done
             sbot.close();
         });
