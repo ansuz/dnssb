@@ -37,24 +37,37 @@ switch (argv[0]) {
         break;
     case 'dump':
     (function () {
-        var count = 0;
-        Lib.dump.records(function (record) { // each
-            console.log(JSON.stringify(record, null, 2));
-            count++;
-        }, function (sbot) { // done
-            console.log("Found a total of %s valid ssb-dns records", count);
-            sbot.close();
+        var Client = require("ssb-client");
+
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            var count = 0;
+            Lib.dump.records(function (record) { // each
+                console.log(JSON.stringify(record, null, 2));
+                count++;
+            }, function (err) { // done
+                if (err) throw err;
+                console.log("Found a total of %s valid ssb-dns records", count);
+                sbot.close();
+            });
         });
     }());
         break;
     case 'show':
     (function () {
         var name = argv[1] || '';
+        var Client = require("ssb-client");
 
-        Lib.dump.formattedRecords({name: name}, function (line) { // each
-            console.log(line);
-        }, function (sbot) { // done
-            sbot.close();
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            Lib.dump.formattedRecords(sbot, {name: name}, function (line) {
+                console.log(line);
+            }, function (err) { // done
+                if (err) throw err;
+                sbot.close();
+            });
         });
     }());
         break;
