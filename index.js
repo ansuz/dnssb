@@ -43,7 +43,7 @@ switch (argv[0]) {
             if (err) throw err;
 
             var count = 0;
-            Lib.dump.records(function (record) { // each
+            Lib.dump.records(sbot, function (record) { // each
                 console.log(JSON.stringify(record, null, 2));
                 count++;
             }, function (err) { // done
