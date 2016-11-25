@@ -13,6 +13,7 @@ var updateHelp = "\tdnssb update name [ttl] [class] type value";
 var branchHelp = "\tdnssb branch name type (class)";
 var serverHelp = "\tdnssb server port host";
 var dumpHelp = "\tdnssb dump";
+var showHelp = "\tdnssb show [domain]";
 
 var CLI_Help = function () {
     [
@@ -22,6 +23,7 @@ var CLI_Help = function () {
         updateHelp,
         branchHelp,
         dumpHelp,
+        showHelp,
     ].forEach(function (m) {
         console.log(m);
     });
@@ -35,13 +37,37 @@ switch (argv[0]) {
         break;
     case 'dump':
     (function () {
-        var count = 0;
-        Lib.dump.records(function (record) { // each
-            console.log(JSON.stringify(record, null, 2));
-            count++;
-        }, function (sbot) { // done
-            console.log("Found a total of %s valid ssb-dns records", count);
-            sbot.close();
+        var Client = require("ssb-client");
+
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            var count = 0;
+            Lib.dump.records(sbot, function (record) { // each
+                console.log(JSON.stringify(record, null, 2));
+                count++;
+            }, function (err) { // done
+                if (err) throw err;
+                console.log("Found a total of %s valid ssb-dns records", count);
+                sbot.close();
+            });
+        });
+    }());
+        break;
+    case 'show':
+    (function () {
+        var name = argv[1] || '';
+        var Client = require("ssb-client");
+
+        Client(function (err, sbot) {
+            if (err) throw err;
+
+            Lib.dump.formattedRecords(sbot, {name: name}, function (line) {
+                console.log(line);
+            }, function (err) { // done
+                if (err) throw err;
+                sbot.close();
+            });
         });
     }());
         break;
