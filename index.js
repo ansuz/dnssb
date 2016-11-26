@@ -77,12 +77,12 @@ switch (argv[0]) {
         var host = argv[2] || '127.0.0.1';
         var Client = require("ssb-client");
 
-        Client(function (err, sbot) {
+        Client(function (err, sbot, config) {
             if (err) throw err;
 
             Lib.server.listen(sbot, port, host, function () {
                 console.log("server listening on %s:%s", host, port);
-            });
+            }, config && config.dns);
         });
     }());
         break;
