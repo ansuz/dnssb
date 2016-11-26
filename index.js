@@ -90,7 +90,7 @@ switch (argv[0]) {
     (function () {
         var branches = [];
         while (argv[1] && SsbRef.isMsgId(argv[1])) {
-            branches.push(argv.splice(1));
+            branches.push(argv.splice(1, 1)[0]);
         }
 
         if (argv.length < 4) {
