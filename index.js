@@ -80,6 +80,9 @@ switch (argv[0]) {
         Client(function (err, sbot, config) {
             if (err) throw err;
 
+            // keep alive
+            setInterval(sbot.whoami, 10e3)
+
             Lib.server.listen(sbot, port, host, function () {
                 console.log("server listening on %s:%s", host, port);
             }, config && config.dns);
